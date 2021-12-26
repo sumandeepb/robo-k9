@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(pubsub_tut_pkg)
+project(helloworld_pkg)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -21,12 +21,12 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(pubsub_node src/pubsub_node.cpp)
-target_include_directories(pubsub_node PUBLIC
+add_executable(helloworld_node src/helloworld_node.cpp)
+target_include_directories(helloworld_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-install(TARGETS pubsub_node
+install(TARGETS helloworld_node
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
