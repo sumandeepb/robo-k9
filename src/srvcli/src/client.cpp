@@ -19,7 +19,7 @@ public:
     {
         if (argc != 3)
         {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "usage: add_two_ints_client X Y");
+            RCLCPP_INFO(this->get_logger(), "usage: add_two_ints_client X Y");
             return 1;
         }
 
@@ -31,21 +31,21 @@ public:
         {
             if (!rclcpp::ok())
             {
-                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
                 return 0;
             }
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "service not available, waiting again...");
+            RCLCPP_INFO(this->get_logger(), "service not available, waiting again...");
         }
 
         auto result = client_->async_send_request(request);
         // Wait for the result.
         if (rclcpp::spin_until_future_complete(this->get_node_base_interface(), result) == rclcpp::FutureReturnCode::SUCCESS)
         {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum: %ld", result.get()->sum);
+            RCLCPP_INFO(this->get_logger(), "Sum: %ld", result.get()->sum);
         }
         else
         {
-            RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
+            RCLCPP_ERROR(this->get_logger(), "Failed to call service add_two_ints");
         }
 
         return 0;
