@@ -18,13 +18,13 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(example_interfaces REQUIRED)
+find_package(tutorial_interfaces REQUIRED)
 
 add_executable(server src/server.cpp)
-ament_target_dependencies(server rclcpp example_interfaces)
+ament_target_dependencies(server rclcpp tutorial_interfaces)
 
 add_executable(client src/client.cpp)
-ament_target_dependencies(client rclcpp example_interfaces)
+ament_target_dependencies(client rclcpp tutorial_interfaces)
 
 install(TARGETS server client DESTINATION lib/${PROJECT_NAME})
 

@@ -3,29 +3,30 @@
 #include <memory>
 
 #include "rclcpp/rclcpp.hpp"
-#include "example_interfaces/srv/add_two_ints.hpp"
+#include "tutorial_interfaces/srv/add_three_ints.hpp"
 
 using namespace std::chrono_literals;
 
 class MinimalClient : public rclcpp::Node
 {
 public:
-    MinimalClient() : Node("add_two_ints_client")
+    MinimalClient() : Node("add_three_ints_client")
     {
-        client_ = this->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
+        client_ = this->create_client<tutorial_interfaces::srv::AddThreeInts>("add_three_ints");
     }
 
     int spin_custom(int argc, char **argv)
     {
-        if (argc != 3)
+        if (argc != 4)
         {
-            RCLCPP_INFO(this->get_logger(), "usage: add_two_ints_client X Y");
+            RCLCPP_INFO(this->get_logger(), "usage: add_three_ints_client X Y Z");
             return 1;
         }
 
-        auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
+        auto request = std::make_shared<tutorial_interfaces::srv::AddThreeInts::Request>();
         request->a = atoll(argv[1]);
         request->b = atoll(argv[2]);
+        request->c = atoll(argv[3]);
 
         while (!client_->wait_for_service(1s))
         {
@@ -45,14 +46,14 @@ public:
         }
         else
         {
-            RCLCPP_ERROR(this->get_logger(), "Failed to call service add_two_ints");
+            RCLCPP_ERROR(this->get_logger(), "Failed to call service add_three_ints");
         }
 
         return 0;
     }
 
 private:
-    rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedPtr client_;
+    rclcpp::Client<tutorial_interfaces::srv::AddThreeInts>::SharedPtr client_;
 };
 
 int main(int argc, char **argv)

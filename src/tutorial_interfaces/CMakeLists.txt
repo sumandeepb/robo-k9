@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(pubsub)
+project(tutorial_interfaces)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -19,19 +19,12 @@ endif()
 find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
-find_package(rclcpp REQUIRED)
-find_package(tutorial_interfaces REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
-add_executable(talker src/publisher.cpp)
-ament_target_dependencies(talker rclcpp tutorial_interfaces)
-
-add_executable(listener src/subscriber.cpp)
-ament_target_dependencies(listener rclcpp tutorial_interfaces)
-
-install(TARGETS
-  talker
-  listener
-  DESTINATION lib/${PROJECT_NAME})
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Num.msg"
+  "srv/AddThreeInts.srv"
+ )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
