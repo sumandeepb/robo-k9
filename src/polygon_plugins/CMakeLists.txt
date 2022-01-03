@@ -23,39 +23,19 @@ find_package(pluginlib REQUIRED)
 
 add_library(polygon_plugins src/polygon_plugins.cpp)
 target_include_directories(polygon_plugins PUBLIC
-<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-<INSTALL_INTERFACE:include>)
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   polygon_plugins
   polygon_base
   pluginlib
 )
 
-pluginlib_export_plugin_description_file(polygon_base plugins.xml)
-
-install(
-  TARGETS polygon_plugins
-  EXPORT export_${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-add_library(polygon_plugins src/polygon_plugins.cpp)
-target_include_directories(polygon_plugins PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  polygon_plugins
-  "polygon_base"
-  "pluginlib"
-)
-
-# prevent pluginlib from using boost
-# target_compile_definitions(polygon_base PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
 target_compile_definitions(polygon_plugins PRIVATE "POLYGON_PLUGINS_BUILDING_LIBRARY")
+
+pluginlib_export_plugin_description_file(polygon_base plugins.xml)
 
 install(
   DIRECTORY include/
@@ -83,13 +63,6 @@ endif()
 ament_export_include_directories(
   include
 )
-ament_export_libraries(
-  polygon_plugins
-)
-ament_export_targets(
-  export_${PROJECT_NAME}
-)
-
 ament_export_libraries(
   polygon_plugins
 )
