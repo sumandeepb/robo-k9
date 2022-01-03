@@ -25,11 +25,11 @@ target_include_directories(area_node PUBLIC
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   area_node
-  "pluginlib"
+  pluginlib
 )
 
 # prevent pluginlib from using boost
-# target_compile_definitions(polygon_base PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+target_compile_definitions(area_node PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
 install(
   DIRECTORY include/
