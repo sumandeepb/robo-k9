@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Robo K9 System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body style="background-color: seagreen; color: seashell; text-align: center;">
+    <h1>Web Control Panel</h1>
+    <br>
+    <button style="margin: 10px;" id="111" class="button">LAMP ON</button>
+    <br>
+    <button style="margin:10px;" id="110" class="button"> LAMP OFF</button>
+    <script>                                        // starting Javascript.
+        $(".button").click(function () {            // if any button from the ".button" class is clicked
+            var p = $(this).attr('id');             // get this button id and store it inside the "p" variable.
+            pin: p                                  // a dictionary contains the button id to get sent to the web server.
+            $.get("http://192.168.0.201:80/", {     // then send a get request to the web server
+                pin: p                              // data in a form of dictionary {pin: p} which is the butoon id.
+            });
+        });      
+    </script>
+</body>
+
+</html>
