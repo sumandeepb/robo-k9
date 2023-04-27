@@ -39,14 +39,14 @@ void setup()
   pinMode(B_2, OUTPUT);
   pinMode(B_3, OUTPUT);
   pinMode(B_4, OUTPUT);
-  pinMode(SENSOR_PIN, INPUT);
+  pinMode(SENSOR_PIN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(SENSOR_PIN), countUpdate, FALLING);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   getRPM();
-  displayRPM(rpmSensorPulses);
+  displayRPM_lin(rpmSensorPulses);
 }
 
 void countUpdate() {
@@ -87,7 +87,7 @@ unsigned int getRPM()
   return rpm;
 }
 
-void displayRPM(unsigned int rpm)
+void displayRPM_lin(unsigned int rpm)
 {
   rpm %= 100; // roll over
 
