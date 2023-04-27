@@ -29,7 +29,7 @@ unsigned int dig2;
 void setup()
 {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
   //this will set all the pins to output, and the sensor pin to input to receive an electrical signal.
   pinMode(A_1, OUTPUT);
   pinMode(A_2, OUTPUT);
@@ -40,7 +40,7 @@ void setup()
   pinMode(B_3, OUTPUT);
   pinMode(B_4, OUTPUT);
   pinMode(SENSOR_PIN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(SENSOR_PIN), countUpdate, FALLING);
+  attachInterrupt(digitalPinToInterrupt(SENSOR_PIN), countUpdate, CHANGE);
 }
 
 void loop() {
@@ -51,7 +51,7 @@ void loop() {
 
 void countUpdate() {
   unsigned int currentInterruptTime = millis();
-  if (currentInterruptTime - lastInterruptTime > 50) // we set a 50ms no-interrupts window
+  if (currentInterruptTime - lastInterruptTime > 10) // we set a no-interrupts window
   {
     rpmSensorPulses++; //increase count
     fValidResult = true;
@@ -69,7 +69,7 @@ unsigned int getRPM()
 
     unsigned int dTime = timeBuffer[iBuffer] - timeBuffer[(iBuffer + 1) % (BUFFER_SIZE)];
     unsigned int sPulse = pulseBuffer[iBuffer] - pulseBuffer[(iBuffer + 1) % (BUFFER_SIZE)];
-    rpm = sPulse * 60 / ((dTime + 500) / 1000);
+    rpm = sPulse * 30 / ((dTime + 500) / 1000);
 
     if (true == fValidResult) {
       Serial.print(sPulse);
