@@ -51,7 +51,7 @@ void loop() {
 
 void countUpdate() {
   unsigned int currentInterruptTime = millis();
-  if (currentInterruptTime - lastInterruptTime > 100) // we set a 10ms no-interrupts window
+  if (currentInterruptTime - lastInterruptTime > 50) // we set a 50ms no-interrupts window
   {
     rpmSensorPulses++; //increase count
     fValidResult = true;
